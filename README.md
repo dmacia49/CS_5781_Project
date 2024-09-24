@@ -1,6 +1,6 @@
 # Wake UP!!
 
-![](https://github.com/dmacia49/CS_5781_Project/assets/wakeupcall.jpg)
+![](https://github.com/dmacia49/CS_5781_Project/assets/3.jpg)
 
 Version 1.0
 
