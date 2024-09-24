@@ -1,6 +1,6 @@
 # Wake UP!!
 
-![](https://github.com/dmacia49/CS_5781_Project/assets/3.jpg)
+![](https://github.com/dmacia49/CS_5781_Project/blob/main/assets/3.jpg)
 
 Version 1.0
 
