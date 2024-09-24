@@ -24,9 +24,9 @@ The mental challenges will range in difficulty and variety, ensuring that the us
 
 ## Functionality:
 
-1. Setting up alarm: Like any other alarm app, users can set their alarm by the time, date, day, and such.
-2. Running in the background: Once the alarm goes off, the user cannot just turn it off by removing it from the notification like the traditional apps. The app will keep running in the background until the puzzles are solved.
-3. Solve challenges to snooze or turn off: Only after solving a set of puzzles, the user will be able to snooze or turn the alarm off.
-4. Save user patterns: The app will save user patterns based on their usage behavior. If they keep on snoozing the alarm multiple times, the puzzles will get harder to solve, ensuring they wake up without going back to bed again.
-5. Option to turn off certain challenges: Users can turn off some of the challenges or puzzles that may be too hard for them to solve right after waking up. This will prevent the app from being more disruptive than being helpful and enjoyable.
-6. Timeout period: There will be a timeout period after which the alarm will turn off automatically. This time can be 10-15 minutes. This will prevent the app from running in the background indefinitely.
+1. **Setting up alarm:** Like any other alarm app, users can set their alarm by the time, date, day, and such.
+2. **Running in the background:** Once the alarm goes off, the user cannot just turn it off by removing it from the notification like the traditional apps. The app will keep running in the background until the puzzles are solved.
+3. **Solve challenges to snooze or turn off:** Only after solving a set of puzzles, the user will be able to snooze or turn the alarm off.
+4. **Save user patterns:** The app will save user patterns based on their usage behavior. If they keep on snoozing the alarm multiple times, the puzzles will get harder to solve, ensuring they wake up without going back to bed again.
+5. **Option to turn off certain challenges:** Users can turn off some of the challenges or puzzles that may be too hard for them to solve right after waking up. This will prevent the app from being more disruptive than being helpful and enjoyable.
+6. **Timeout period:** There will be a timeout period after which the alarm will turn off automatically. This time can be 10-15 minutes. This will prevent the app from running in the background indefinitely.
