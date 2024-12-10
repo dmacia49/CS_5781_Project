@@ -183,6 +183,7 @@ class NotificationService {
     );
   }
 
+
   Future<void> showFullScreenPersistentNotification(
       int id,DateTime scheduledTime, String title, String body) async {
     final AndroidNotificationDetails androidNotificationDetails =
