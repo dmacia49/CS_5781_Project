@@ -6,6 +6,7 @@ import 'enums.dart';
 import 'ClockPage.dart';
 import 'menu.dart';
 import 'data.dart';
+import 'alarm.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -32,15 +33,15 @@ class _HomePageState extends State<HomePage> {
               builder: (BuildContext context, MenuInfo value, Widget? child) {
                 if (value.menuType == MenuType.clock)
                   return ClockPage();
-                // else if (value.menuType == MenuType.alarm)
-                //   return AlarmPage();
+                 else if (value.menuType == MenuType.alarm)
+                   return AlarmPage();
                 else
                   return Container(
                     child: RichText(
                       text: TextSpan(
                         style: TextStyle(fontSize: 20),
                         children: <TextSpan>[
-                          TextSpan(text: 'Upcoming Tutorial\n'),
+                          TextSpan(text: 'Upcoming\n'),
                           TextSpan(
                             text: value.title,
                             style: TextStyle(fontSize: 48),
