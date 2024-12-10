@@ -6,15 +6,16 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:wakeup/alarminfo.dart';
 import 'package:wakeup/data.dart';
+import 'package:wakeup/permissions_manager.dart';
 import 'alarm_helper.dart';
 import 'colors/css.dart';
 import 'main.dart';
 import 'package:timezone/timezone.dart' as tz;
+import 'alarm_manager.dart';
 
 class AlarmPage extends StatefulWidget {
   @override
   _AlarmPageState createState() => _AlarmPageState();
-
 }
 
 class _AlarmPageState extends State<AlarmPage> {
@@ -22,11 +23,8 @@ class _AlarmPageState extends State<AlarmPage> {
   DateTime? selectedDate; // Declare the selectedDate variable
   TimeOfDay? _selectedTime;
 
-
-
   @override
   Widget build(BuildContext context) {
-
     return Container(
       padding: EdgeInsets.symmetric(vertical: 32, horizontal: 64),
       child: Column(
@@ -142,7 +140,6 @@ class _AlarmPageState extends State<AlarmPage> {
                             onAddAlarm: (AlarmInfo newAlarm) {
                               setState(() {
                                 alarms.add(newAlarm);
-                                _zonedScheduleAlarmClockNotification();// Add the new alarm to the list
                               });
                             },
                           );
@@ -171,20 +168,6 @@ class _AlarmPageState extends State<AlarmPage> {
   }
 }
 
-Future<void> _zonedScheduleAlarmClockNotification() async {
-  await flutterLocalNotificationsPlugin.zonedSchedule(
-      123,
-      'scheduled alarm clock title',
-      'scheduled alarm clock body',
-      tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
-      const NotificationDetails(
-          android: AndroidNotificationDetails(
-              'alarm_clock_channel', 'Alarm Clock Channel',
-              channelDescription: 'Alarm Clock Notification')),
-      androidScheduleMode: AndroidScheduleMode.alarmClock,
-      uiLocalNotificationDateInterpretation:
-      UILocalNotificationDateInterpretation.absoluteTime);
-}
 
 class AddAlarmDialog extends StatefulWidget {
   final Function(AlarmInfo) onAddAlarm;
@@ -199,7 +182,7 @@ class _AddAlarmDialogState extends State<AddAlarmDialog> {
   final TextEditingController _titleController = TextEditingController();
   DateTime? selectedDate;
   TimeOfDay? _selectedTime;
-
+  final AlarmManager alarmManager = AlarmManager();
 
   @override
   Widget build(BuildContext context) {
@@ -268,7 +251,21 @@ class _AddAlarmDialogState extends State<AddAlarmDialog> {
 
         // Add Alarm Button
         TextButton(
-          onPressed: () async{
+          onPressed: () async {
+            final permissionHelper = AlarmPermissionHelper();
+
+            bool hasPermission =
+                await permissionHelper.checkAndRequestPermission();
+
+            if (!hasPermission) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content:
+                      Text('Permission to schedule exact alarms is required.'),
+                ),
+              );
+              return;
+            }
             if (_titleController.text.isNotEmpty &&
                 selectedDate != null &&
                 _selectedTime != null) {
@@ -280,12 +277,10 @@ class _AddAlarmDialogState extends State<AddAlarmDialog> {
                 _selectedTime!.hour,
                 _selectedTime!.minute,
               );
-
               // Generate a random gradient
               final random = Random();
-              final randomGradient = ranGradientColors.colors[
-              random.nextInt(ranGradientColors.colors.length)
-              ];
+              final randomGradient = ranGradientColors
+                  .colors[random.nextInt(ranGradientColors.colors.length)];
               // Create and pass the new alarm
               widget.onAddAlarm(AlarmInfo(
                 title: _titleController.text,
@@ -293,13 +288,20 @@ class _AddAlarmDialogState extends State<AddAlarmDialog> {
                 gradientColors: randomGradient,
               ));
 
+              // NotificationHelper.scheduleAlarmNotification(
+              //   UniqueKey().hashCode, // Unique ID for each alarm
+              //    alarmDateTime,
+              //   'Alarm: ${_titleController.text}', // Notification title
+              //   'Your alarm is set for ${DateFormat('yMMMd hh:mm aa').format(alarmDateTime)}.', // Notification body
+              // );
 
-              NotificationHelper.scheduleAlarmNotification(
-                UniqueKey().hashCode, // Unique ID for each alarm
-                alarmDateTime,
-                'Alarm: ${_titleController.text}', // Notification title
-                'Your alarm is set for ${DateFormat('yMMMd hh:mm aa').format(alarmDateTime)}.', // Notification body
-              );
+              alarmManager.scheduleAlarm(alarmDateTime);
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                    content: Text(
+                        'Alarm set for ${DateFormat.jm().format(alarmDateTime)}')),
+              ); // Add the new alarm to the list
 
               Navigator.pop(context); // Close dialog
             }
@@ -310,4 +312,3 @@ class _AddAlarmDialogState extends State<AddAlarmDialog> {
     );
   }
 }
-
