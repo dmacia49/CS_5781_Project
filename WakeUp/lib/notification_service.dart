@@ -213,15 +213,16 @@ class NotificationService {
         //   icon: DrawableResourceAndroidBitmap('@mipmap/ic_launcher'),
         //   contextual: true,
         // ),
-        AndroidNotificationAction(
-          secondActionId,
-          'Action 2',
-          titleColor: Color.fromARGB(255, 255, 0, 0),
-          icon: DrawableResourceAndroidBitmap('@mipmap/ic_launcher'),
-        ),
+        // AndroidNotificationAction(
+        //   secondActionId,
+        //   'Action 2',
+        //   titleColor: Color.fromARGB(255, 255, 0, 0),
+        //   icon: DrawableResourceAndroidBitmap('@mipmap/ic_launcher'),
+        // ),
         AndroidNotificationAction(
           dismissActionId,
-          'Dismiss',
+          'Puzzle',
+          titleColor: Color.fromARGB(255, 255, 0, 0),
           icon: DrawableResourceAndroidBitmap('@mipmap/ic_launcher'),
           showsUserInterface: true,
           cancelNotification: true, // Dismisses the notification
