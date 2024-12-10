@@ -127,7 +127,6 @@ class DigitalClockWidgetState extends State<DigitalClockWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print('=====>digital clock updated');
     return Text(
       formattedTime,
       style: TextStyle(fontFamily: 'avenir', color: CustomColors.primaryTextColor, fontSize: 64),

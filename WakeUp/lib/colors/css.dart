@@ -35,3 +35,14 @@ class GradientTemplate {
     GradientColors(GradientColors.fire),
   ];
 }
+
+class ranGradientColors {
+  static const List<List<Color>> colors = [
+    [Color(0xFF56CCF2), Color(0xFF2F80ED)], // Sky
+    [Color(0xFFFFA17F), Color(0xFFFF758C)], // Sunset
+    [Color(0xFF43C6AC), Color(0xFF191654)], // Sea
+    [Color(0xFF3A1C71), Color(0xFFD76D77)], // Purple
+    [Color(0xFF1FA2FF), Color(0xFF12D8FA)], // Ice
+    [Color(0xFFFA8BFF), Color(0xFF2BD2FF)], // Neon
+  ];
+}
