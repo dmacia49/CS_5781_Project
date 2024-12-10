@@ -6,11 +6,11 @@ Version 1.0
 
 ### Team Members:
 
--
+-   Darpan Patel
 -   Daniel Macias
 -   Rizwan Islam
--
--
+-   Jooeun Jeon
+-   Yug Kalubhai Patel
 
 ### Faculty Advisor:
 
