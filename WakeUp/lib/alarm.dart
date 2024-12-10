@@ -14,7 +14,9 @@ import 'package:timezone/timezone.dart' as tz;
 import 'alarm_manager.dart';
 import 'notification_service.dart';
 
+
 class AlarmPage extends StatefulWidget {
+  const AlarmPage({super.key});
   @override
   _AlarmPageState createState() => _AlarmPageState();
 }
@@ -23,6 +25,21 @@ class _AlarmPageState extends State<AlarmPage> {
   TextEditingController _titleController = TextEditingController();
   DateTime? selectedDate; // Declare the selectedDate variable
   TimeOfDay? _selectedTime;
+
+  @override
+  void initState() {
+    listenToNotifications();
+    super.initState();
+  }
+
+//  to listen to any notification clicked or not
+  listenToNotifications() {
+    print("Listening to notification");
+    NotificationService.onClickNotification.stream.listen((event) {
+      print(event);
+      Navigator.pushNamed(context, '/another', arguments: event);
+    });
+  }
 
 
   @override
@@ -186,6 +203,8 @@ class _AddAlarmDialogState extends State<AddAlarmDialog> {
   TimeOfDay? _selectedTime;
   final AlarmManager alarmManager = AlarmManager();
   final NotificationService alarmM = NotificationService();
+  final NotificationService notificationService = NotificationService();
+
 
   @override
   Widget build(BuildContext context) {
@@ -299,6 +318,13 @@ class _AddAlarmDialogState extends State<AddAlarmDialog> {
               // );
 
               alarmManager.scheduleAlarm(alarmDateTime);
+
+              // notificationService.showSimpleNotification(
+              //         title: "Simple Notification",
+              //         body: "This is a simple notification",
+              //         payload: "This is simple data"
+              // );
+
 
 
               ScaffoldMessenger.of(context).showSnackBar(

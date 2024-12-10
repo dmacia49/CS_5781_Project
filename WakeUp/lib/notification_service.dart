@@ -3,8 +3,10 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+
 
 class NotificationService {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -13,14 +15,50 @@ class NotificationService {
   static const String navigationActionId = 'id_3';
   static const String secondActionId = 'action_2';
   static const String dismissActionId = 'dismiss_action';
+  static final onClickNotification = BehaviorSubject<String>();
+
+  static void onNotificationTap(NotificationResponse notificationResponse) {
+    onClickNotification.add(notificationResponse.payload!);
+  }
 
   Future<void> init() async {
-    var androidSettings = AndroidInitializationSettings('app_icon');
-    var settings = InitializationSettings(
-      android: androidSettings,
-    );
-    await flutterLocalNotificationsPlugin.initialize(settings);
+
+    // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
+    const AndroidInitializationSettings initializationSettingsAndroid =
+    AndroidInitializationSettings('@mipmap/ic_launcher');
+
+    final InitializationSettings initializationSettings =
+    InitializationSettings(
+        android: initializationSettingsAndroid);
+
+    flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>()!.requestNotificationsPermission();
+
+
+    flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onDidReceiveNotificationResponse: onNotificationTap,
+        onDidReceiveBackgroundNotificationResponse: onNotificationTap);
+
+    //await flutterLocalNotificationsPlugin.initialize(InitializationSettings());
   }
+  // show a simple notification
+  Future<void> showSimpleNotification({
+    required String title,
+    required String body,
+    required String payload,
+  }) async {
+    const AndroidNotificationDetails androidNotificationDetails =
+    AndroidNotificationDetails('your channel id', 'your channel name',
+        channelDescription: 'your channel description',
+        importance: Importance.max,
+        priority: Priority.high,
+        ticker: 'ticker');
+    const NotificationDetails notificationDetails =
+    NotificationDetails(android: androidNotificationDetails);
+    await flutterLocalNotificationsPlugin.show(0, title, body, notificationDetails, payload: payload);
+  }
+
 
   Future<void> showNotification(int id, String title, String body) async {
     var androidDetails = AndroidNotificationDetails(
