@@ -6,10 +6,12 @@ import 'enums.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
-import 'global.dart';
+
 
  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
      FlutterLocalNotificationsPlugin();
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +37,7 @@ void main() async {
     android: initializationSettingsAndroid,
     iOS: initializationSettingsDarwin,
   );
+
 
   await flutterLocalNotificationsPlugin.initialize(
     initializationSettings,

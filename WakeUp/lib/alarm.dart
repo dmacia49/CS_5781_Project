@@ -12,6 +12,7 @@ import 'colors/css.dart';
 import 'main.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'alarm_manager.dart';
+import 'notification_service.dart';
 
 class AlarmPage extends StatefulWidget {
   @override
@@ -22,6 +23,7 @@ class _AlarmPageState extends State<AlarmPage> {
   TextEditingController _titleController = TextEditingController();
   DateTime? selectedDate; // Declare the selectedDate variable
   TimeOfDay? _selectedTime;
+
 
   @override
   Widget build(BuildContext context) {
@@ -183,6 +185,7 @@ class _AddAlarmDialogState extends State<AddAlarmDialog> {
   DateTime? selectedDate;
   TimeOfDay? _selectedTime;
   final AlarmManager alarmManager = AlarmManager();
+  final NotificationService alarmM = NotificationService();
 
   @override
   Widget build(BuildContext context) {
@@ -297,13 +300,13 @@ class _AddAlarmDialogState extends State<AddAlarmDialog> {
 
               alarmManager.scheduleAlarm(alarmDateTime);
 
+
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                     content: Text(
                         'Alarm set for ${DateFormat.jm().format(alarmDateTime)}')),
               ); // Add the new alarm to the list
-
-              Navigator.pop(context); // Close dialog
+              Navigator.pop(context); // Close dialog//
             }
           },
           child: Text('Add'),
